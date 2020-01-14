@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <prison-population />
+    <jail-population />
   </div>
 </template>
 
 <script>
-import PrisonPopulation from './components/PrisonPopulation.vue'
+import JailPopulation from './components/JailPopulation.vue'
 
 export default {
   name: 'app',
   components: {
-    PrisonPopulation
+    JailPopulation
   }
 }
 </script>

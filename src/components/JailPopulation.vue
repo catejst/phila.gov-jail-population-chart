@@ -1,6 +1,7 @@
 <template>
   <div>
-    <apexchart v-if="ready" width="1200" type="line" :options="chartOptions" :series="series"></apexchart>
+    <apexchart v-if="ready" width="1200" type="line" :options="chartOptions" :series="series" 
+    aria-label="Line chart that shows the monthly Philadelphia jail population from January 2015 to present."></apexchart>
   </div>
 </template>
 
@@ -13,7 +14,7 @@ Vue.use(VueApexCharts);
 Vue.component("apexchart", VueApexCharts);
 
 const endpoint =
-  "https://api.airtable.com/v0/app9m6XveZcIc7Gp5/Prison%20Population?api_key=keySo9AGIliFjjgiG&sort%5B0%5D%5Bfield%5D=Index&sort%5B0%5D%5Bdirection%5D=asc";
+  "https://api.airtable.com/v0/app9m6XveZcIc7Gp5/Jail%20Population?api_key=keySo9AGIliFjjgiG&sort%5B0%5D%5Bfield%5D=Index&sort%5B0%5D%5Bdirection%5D=asc";
 
 export default {
   data: function() {
@@ -29,7 +30,7 @@ export default {
      chartOptions() {
        return {
         chart: {
-          id: "prison-population",
+          id: "jail-population",
           zoom: {
             enabled: false
           },
@@ -42,10 +43,11 @@ export default {
 
         xaxis: {
           position: "bottom",
-          tickPlacement: "between"
+          tickPlacement: "between",
+          type: 'datetime',
         },
         title: {
-          text: "Philadelphia Prison Population"
+          text: "Philadelphia Jail Population"
         },
         stroke: {
           curve: 'straight',
@@ -53,6 +55,9 @@ export default {
          tooltip: {
               shared: true,
               intersect: false,
+              x: {
+                format: 'MMMM yyyy',
+              },
               y: {
                 formatter: (val, obj) => {
                   if (obj.seriesIndex === 1 && val !== null) {
@@ -67,8 +72,8 @@ export default {
         },
         grid: {
           row: {
-            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-            opacity: 0.5
+            colors: ['#f3f3f3', '	transparent'], // takes an array which will be repeated on columns
+            opacity: .75
           },
         },
         fill: {
@@ -85,7 +90,7 @@ export default {
     updateChart() {
       this.series = [
          {
-          name: "Prison population",
+          name: "Jail population",
           type: "line",
           data: this.seriesData
         },
@@ -167,6 +172,10 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 
+.apexcharts-tooltip-title  {
+  background: #444 !important; 
+  color: white !important;
+}
 </style>
