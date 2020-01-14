@@ -1,7 +1,6 @@
 <template>
   <div>
-    <apexchart v-if="ready" width="1000" type="line" :options="chartOptions" :series="series"></apexchart>
-    <!-- <button @click="updateChart">Update!</button> -->
+    <apexchart v-if="ready" width="1200" type="line" :options="chartOptions" :series="series"></apexchart>
   </div>
 </template>
 
@@ -23,7 +22,6 @@ export default {
       endpointData: [],
       initiativesData : [],
       initiativeNames: [],
-      months: [],
       seriesData: [],
     };
   },
@@ -39,7 +37,7 @@ export default {
         },
         colors: [ "#25cef7", "#0f4d90" ],
         markers: {
-              size: [1, 6],
+              size: [1, 5],
         },
 
         xaxis: {
@@ -84,7 +82,7 @@ export default {
   },
 
   methods: {
-    async updateChart() {
+    updateChart() {
       this.series = [
          {
           name: "Prison population",
@@ -92,7 +90,7 @@ export default {
           data: this.seriesData
         },
         {
-          name: 'Initiative Launched',
+          name: 'Initiatives launched',
           type: 'scatter',
           data: this.initiativesData
         },
@@ -125,12 +123,19 @@ export default {
           });
 
           this.initiativeNames = this.endpointData.map(function(datapoint) {
-            if( datapoint["# Initiatives Launched"] ) {
-            return { x: datapoint["Month"],  y: datapoint["Name of Initiative"]};
-            }  else {
+            let numInits =  datapoint["# Initiatives Launched"]
+            if( numInits == 1 ) {
+              return { x: datapoint["Month"],  y: datapoint["Name of Initiative"]};
+            } else if (numInits == 2) {
+              return { x: datapoint["Month"],  y: datapoint["Name of Initiative"] + ", "+ datapoint["Name of Initiative 2"]};
+            } else if (numInits == 3) {
+                return { x: datapoint["Month"],  y: datapoint["Name of Initiative"] + ", " + datapoint["Name of Initiative 2"] + ", " + datapoint["Name of Initiative 3"]};
+             } else if (numInits == 4) {
+                return { x: datapoint["Month"],  y: datapoint["Name of Initiative"] + ", " + datapoint["Name of Initiative 2"] 
+                + ", " + datapoint["Name of Initiative 3"] + ", " + datapoint["Name of Initiative 4"]};
+            } else {
                return { x: datapoint["Month"] , y : null};
             }
-
           });
 
         })
