@@ -22,6 +22,7 @@ export default {
       ready : false,
       endpointData: [],
       initiativesData : [],
+      initiativeNames: [],
       months: [],
       seriesData: [],
     };
@@ -36,9 +37,9 @@ export default {
           },
           
         },
-        colors: [ "#0f4d90", "#25cef7" ],
+        colors: [ "#25cef7", "#0f4d90" ],
         markers: {
-              size: [6, 1],
+              size: [1, 6],
         },
 
         xaxis: {
@@ -55,17 +56,15 @@ export default {
               shared: true,
               intersect: false,
               y: {
-                // formatter: function(val, { seriesIndex, dataPointIndex, w }) {
-                  // if (obj.seriesIndex === 0 && val !== null) {
-                  //   let dpInd = obj.dataPointIndex;
-                  //   // console.log(obj.w);
-                  //   // let newVal = obj.w.globals.seriesZ[0][dpInd];
-                  //   // console.log(newVal);
-                  //   return dpInd;
-                  // } else {
-                  //   return val;
-                  // }
-                // }
+                formatter: (val, obj) => {
+                  if (obj.seriesIndex === 1 && val !== null) {
+                    let dpInd = obj.dataPointIndex;
+                    let newVal = this.initiativeNames[dpInd].y;
+                    return newVal;
+                  } else {
+                    return val;
+                  }
+                },
             },
         },
         grid: {
@@ -77,7 +76,7 @@ export default {
         fill: {
           type:'solid',
           opacity: [1, 1],
-           colors: [ "#0f4d90", "#25cef7" ],
+           colors: [  "#25cef7", "#0f4d90" ],
         },
       }
      }
@@ -85,37 +84,30 @@ export default {
   },
 
   methods: {
-    updateChart() {
-      console.log(this.months);
-
+    async updateChart() {
       this.series = [
+         {
+          name: "Prison population",
+          type: "line",
+          data: this.seriesData
+        },
         {
           name: 'Initiative Launched',
           type: 'scatter',
           data: this.initiativesData
         },
-        {
-          name: "Prison population",
-          type: "line",
-          data: this.seriesData
-        },
-        
-        
+       
       ];
 
       this.ready = true;
     },
 
-    getData: function() {
+    getTheData: function() {
       axios
         .get(endpoint)
-        .then(response => {
+        .then(response => { 
           this.endpointData = response.data.records.map(function(entry) {
             return entry["fields"];
-          });
-
-          this.months = this.endpointData.map(function(datapoint) {
-            return datapoint["Month"];
           });
 
           this.seriesData = this.endpointData.map(function(datapoint) {
@@ -124,13 +116,23 @@ export default {
 
           this.initiativesData = this.endpointData.map(function(datapoint) {
             if( datapoint["# Initiatives Launched"] ) {
-               return { x: datapoint["Month"], y : datapoint["Jail Population"], initiatives: datapoint["# Initiatives Launched"]};
+               return { x: datapoint["Month"], y : datapoint["Jail Population"]};
             } else {
-               return { x: datapoint["Month"] , y : null, initiatives: null };
+               return { x: datapoint["Month"] , y : null };
+               
             }
 
           });
-          console.log(this.endpointData);
+
+          this.initiativeNames = this.endpointData.map(function(datapoint) {
+            if( datapoint["# Initiatives Launched"] ) {
+            return { x: datapoint["Month"],  y: datapoint["Name of Initiative"]};
+            }  else {
+               return { x: datapoint["Month"] , y : null};
+            }
+
+          });
+
         })
         .catch(e => {
           console.log(e);
@@ -140,20 +142,21 @@ export default {
         });
     },
 
+
     updateVal(val, obj) {
       if (obj.seriesIndex === 0) {
         let dpInd = obj.dataPointIndex;
         console.log(obj.w);
         let newVal = dpInd;
-        // console.log(newVal);
         return newVal;
       } else {
         return val;
       }
     }
   },
+
   created() {
-    this.getData();
+    this.getTheData();
   }
 };
 </script>
