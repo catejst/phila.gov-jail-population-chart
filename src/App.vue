@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="vue-app">
     <jail-population />
   </div>
 </template>
