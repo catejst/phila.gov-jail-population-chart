@@ -1,6 +1,6 @@
 <template>
   <div>
-    <apexchart v-if="ready" width="1200" type="line" :options="chartOptions" :series="series" 
+    <apexchart v-if="ready" type="line" :options="chartOptions" :series="series" 
     aria-label="Line chart that shows the monthly Philadelphia jail population from January 2015 to present."></apexchart>
   </div>
 </template>
