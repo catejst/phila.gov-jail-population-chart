@@ -132,12 +132,12 @@ export default {
             if( numInits == 1 ) {
               return { x: datapoint["Month"],  y: datapoint["Name of Initiative"]};
             } else if (numInits == 2) {
-              return { x: datapoint["Month"],  y: datapoint["Name of Initiative"] + ", "+ datapoint["Name of Initiative 2"]};
+              return { x: datapoint["Month"],  y: datapoint["Name of Initiative"] + ",<br>"+ datapoint["Name of Initiative 2"]};
             } else if (numInits == 3) {
-                return { x: datapoint["Month"],  y: datapoint["Name of Initiative"] + ", " + datapoint["Name of Initiative 2"] + ", " + datapoint["Name of Initiative 3"]};
+                return { x: datapoint["Month"],  y: datapoint["Name of Initiative"] + ",<br>" + datapoint["Name of Initiative 2"] + ",<br>" + datapoint["Name of Initiative 3"]};
              } else if (numInits == 4) {
-                return { x: datapoint["Month"],  y: datapoint["Name of Initiative"] + ", " + datapoint["Name of Initiative 2"] 
-                + ", " + datapoint["Name of Initiative 3"] + ", " + datapoint["Name of Initiative 4"]};
+                return { x: datapoint["Month"],  y: datapoint["Name of Initiative"] + ",<br>" + datapoint["Name of Initiative 2"] 
+                + ",<br>" + datapoint["Name of Initiative 3"] + ",<br>" + datapoint["Name of Initiative 4"]};
             } else {
                return { x: datapoint["Month"] , y : null};
             }
@@ -145,7 +145,7 @@ export default {
 
         })
         .catch(e => {
-          console.log(e);
+          console.log(e.reason);
         })
         .finally(() => {
           this.updateChart();
@@ -178,4 +178,5 @@ export default {
   background: #444 !important; 
   color: white !important;
 }
+
 </style>
