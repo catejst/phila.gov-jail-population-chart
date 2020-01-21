@@ -1,4 +1,4 @@
 module.exports = {
   filenameHashing: false,
-  publicPath: "/jail-population-chart/",
+  // publicPath: "/jail-population-chart/",
 };
