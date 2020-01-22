@@ -199,7 +199,7 @@ export default {
 .apexcharts-tooltip-series-group:nth-of-type(3) {
 
   .apexcharts-tooltip-marker {
-    margin-top: 6px;
+    margin-top: 7px;
     align-self: start;
     vertical-align: top;
   }
