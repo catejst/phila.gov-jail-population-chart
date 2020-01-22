@@ -10,6 +10,7 @@
 import Vue from "vue";
 import axios from "axios";
 import VueApexCharts from "vue-apexcharts";
+
 Vue.use(VueApexCharts);
 Vue.component("apexchart", VueApexCharts);
 
@@ -45,9 +46,24 @@ export default {
           position: "bottom",
           tickPlacement: "between",
           type: 'datetime',
+          labels: {
+            datetimeFormatter: {
+              month: "MMMM yyyy"
+            }
+          }
+        },
+
+        yaxis: {
+          title: {
+            text: "Number of individuals",
+              style: {
+              fontSize: '14px'
+            }
+          }
         },
         title: {
-          text: "Philadelphia Jail Population"
+          text: "Philadelphia jail population",
+         
         },
         stroke: {
           curve: 'straight',
