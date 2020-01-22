@@ -188,11 +188,26 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style lang="scss">
 
 .apexcharts-tooltip-title  {
   background: #444 !important; 
   color: white !important;
+  text-align: center;
 }
+
+.apexcharts-tooltip-series-group:nth-of-type(3) {
+
+  .apexcharts-tooltip-marker {
+    margin-top: 6px;
+    align-self: start;
+    vertical-align: top;
+  }
+
+  .apexcharts-tooltip-text-label {
+    vertical-align: top;
+  }
+}
+
 
 </style>
