@@ -10,9 +10,12 @@
 import Vue from "vue";
 import axios from "axios";
 import VueApexCharts from "vue-apexcharts";
+import moment from "moment";
 
 Vue.use(VueApexCharts);
+Vue.use(moment);
 Vue.component("apexchart", VueApexCharts);
+
 
 const endpoint =
   "https://api.airtable.com/v0/app9m6XveZcIc7Gp5/Jail%20Population?api_key=keySo9AGIliFjjgiG&sort%5B0%5D%5Bfield%5D=Index&sort%5B0%5D%5Bdirection%5D=asc";
@@ -44,13 +47,17 @@ export default {
 
         xaxis: {
           position: "bottom",
-          tickPlacement: "between",
+          // tickPlacement: "between",
           type: 'datetime',
+          // tickAmount: 6,
           labels: {
-            datetimeFormatter: {
-              month: "MMMM yyyy"
+          //   datetimeFormatter: {
+              // month: "MMMM-yyyy"
             }
-          }
+          // }
+          // labels: {
+
+          // }
         },
 
         yaxis: {
@@ -130,38 +137,52 @@ export default {
           });
 
           this.seriesData = this.endpointData.map(function(datapoint) {
-            return { x: datapoint["Month"] , y : datapoint["Jail Population"] };
+            let date = datapoint["Month"];
+            let parsedDate = moment(date, "MMMM YYYY");
+            let dateVal = parsedDate.format();
+            console.log(parsedDate)
+            console.log(dateVal)
+            
+            return { x: dateVal , y : datapoint["Jail Population"] };
           });
 
           this.initiativesData = this.endpointData.map(function(datapoint) {
+            let date = datapoint["Month"];
+            let parsedDate = moment(date, "MMMM YYYY");
+            let dateVal = parsedDate.format();
+
             if( datapoint["# Initiatives Launched"] ) {
-               return { x: datapoint["Month"], y : datapoint["Jail Population"]};
+               return { x: dateVal, y : datapoint["Jail Population"]};
             } else {
-               return { x: datapoint["Month"] , y : null };
-               
+               return { x: dateVal , y : null };
             }
 
           });
 
           this.initiativeNames = this.endpointData.map(function(datapoint) {
+            let date = datapoint["Month"];
+            let parsedDate = moment(date, "MMMM YYYY");
+            let dateVal = parsedDate.format();
+         
+
             let numInits =  datapoint["# Initiatives Launched"]
             if( numInits == 1 ) {
-              return { x: datapoint["Month"],  y: datapoint["Name of Initiative"]};
+              return { x: dateVal,  y: datapoint["Name of Initiative"]};
             } else if (numInits == 2) {
-              return { x: datapoint["Month"],  y: datapoint["Name of Initiative"] + ",<br>"+ datapoint["Name of Initiative 2"]};
+              return { x: dateVal,  y: datapoint["Name of Initiative"] + ",<br>"+ datapoint["Name of Initiative 2"]};
             } else if (numInits == 3) {
-                return { x: datapoint["Month"],  y: datapoint["Name of Initiative"] + ",<br>" + datapoint["Name of Initiative 2"] + ",<br>" + datapoint["Name of Initiative 3"]};
+                return { x: dateVal,  y: datapoint["Name of Initiative"] + ",<br>" + datapoint["Name of Initiative 2"] + ",<br>" + datapoint["Name of Initiative 3"]};
              } else if (numInits == 4) {
-                return { x: datapoint["Month"],  y: datapoint["Name of Initiative"] + ",<br>" + datapoint["Name of Initiative 2"] 
+                return { x: dateVal,  y: datapoint["Name of Initiative"] + ",<br>" + datapoint["Name of Initiative 2"] 
                 + ",<br>" + datapoint["Name of Initiative 3"] + ",<br>" + datapoint["Name of Initiative 4"]};
             } else {
-               return { x: datapoint["Month"] , y : null};
+               return { x: dateVal , y : null};
             }
           });
 
         })
         .catch(e => {
-          console.log(e.reason);
+          console.log(e);
         })
         .finally(() => {
           this.updateChart();
