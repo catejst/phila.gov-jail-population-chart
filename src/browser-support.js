@@ -4,7 +4,16 @@ function isIE() {
   var is_ie = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
 
   if (is_ie) {
-    require("./polyfills/Promise.prototype.finally.js");
+    require('../node_modules/core-js/modules/es6.promise.js');
+    require('../node_modules/core-js/modules/es6.map.js');
+    require('../node_modules/core-js/modules/es7.promise.finally.js');
+    require('../node_modules/core-js/modules/es7.promise.try.js');
+    require('../node_modules/core-js/modules/es7.error.is-error.js');
+
+
+    
+    
+    // require("./polyfills/Promise.prototype.finally.js");
   }
 }
 

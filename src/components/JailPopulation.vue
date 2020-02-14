@@ -47,17 +47,13 @@ export default {
 
         xaxis: {
           position: "bottom",
-          // tickPlacement: "between",
           type: 'datetime',
-          // tickAmount: 6,
           labels: {
-          //   datetimeFormatter: {
-              // month: "MMMM-yyyy"
-            }
-          // }
-          // labels: {
-
-          // }
+            datetimeFormatter: {
+              month: "MMMM yyyy"
+            },
+          },
+      
         },
 
         yaxis: {
@@ -140,8 +136,6 @@ export default {
             let date = datapoint["Month"];
             let parsedDate = moment(date, "MMMM YYYY");
             let dateVal = parsedDate.format();
-            console.log(parsedDate)
-            console.log(dateVal)
             
             return { x: dateVal , y : datapoint["Jail Population"] };
           });
@@ -163,7 +157,6 @@ export default {
             let date = datapoint["Month"];
             let parsedDate = moment(date, "MMMM YYYY");
             let dateVal = parsedDate.format();
-         
 
             let numInits =  datapoint["# Initiatives Launched"]
             if( numInits == 1 ) {
@@ -183,6 +176,7 @@ export default {
         })
         .catch(e => {
           console.log(e);
+          console.log('error caught')
         })
         .finally(() => {
           this.updateChart();
