@@ -1,4 +1,4 @@
-# Phila.gov prison-population-chart
+# Phila.gov Jail population chart for the SJC page
 
 ## Project setup
 ```
