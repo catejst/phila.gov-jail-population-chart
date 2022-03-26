@@ -5,7 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "prepare": "npm run snyk-protect",
+    "snyk-protect": "snyk-protect"
   },
   "dependencies": {
     "@babel/polyfill": "^7.8.3",
@@ -18,7 +20,8 @@
     "sass": "^1.24.4",
     "sass-loader": "^8.0.2",
     "vue": "^2.6.10",
-    "vue-apexcharts": "^1.5.1"
+    "vue-apexcharts": "^1.5.1",
+    "@snyk/protect": "latest"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.10.0",
@@ -51,5 +54,6 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ]
+  ],
+  "snyk": true
 }
